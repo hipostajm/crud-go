@@ -24,11 +24,12 @@ func main() {
 
   db.AutoMigrate(&store.Task{}, &store.User{})
 
+
   taskStore := store.TaskStore{Ctx: ctx, Db: db}
   taskServiec := service.TaskService{TaskStore: taskStore}
   taskHandler := handler.TaskHandler{TaskService: taskServiec}
 
-  http.HandleFunc("/create", taskHandler.CreateTask)
+  http.HandleFunc("/tasks", taskHandler.Tasks)
 
   if err := http.ListenAndServe(":8080", nil); err != nil{
     panic(err)
